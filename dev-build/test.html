@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pick & Place Eyelashes</title>
+  <style>
+    body {
+      margin: 0;
+      background: #87ceeb;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    .eyes {
+      display: flex;
+      gap: 80px;
+      position: relative;
+    }
+
+    .eye-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .eye {
+      width: 150px;
+      height: 150px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 0 0 5px #000;
+    }
+
+    .pupil {
+      width: 50px;
+      height: 50px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .eyelash {
+      width: 80px;
+      height: 10px;
+      background: black;
+      border-radius: 10px;
+      position: absolute;
+      cursor: grab;
+      transition: transform 0.2s ease;
+    }
+
+    .eyelash.dragging {
+      cursor: grabbing;
+      opacity: 0.7;
+      z-index: 999;
+    }
+
+    .eyelash-storage {
+      position: absolute;
+      left: 30px;
+      bottom: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="eyelash-storage">
+  <div class="eyelash" style="transform: rotate(25deg);"></div>
+  <div class="eyelash" style="transform: rotate(-25deg);"></div>
+</div>
+
+<div class="eyes">
+  <div class="eye-container" id="left-eye">
+    <div class="eye">
+      <div class="pupil"></div>
+    </div>
+  </div>
+  <div class="eye-container" id="right-eye">
+    <div class="eye">
+      <div class="pupil"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const eyelashes = document.querySelectorAll(".eyelash");
+  const eyes = document.querySelectorAll(".eye");
+  let activeLash = null;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  eyelashes.forEach(lash => {
+    lash.addEventListener("mousedown", startDrag);
+  });
+
+  function startDrag(e) {
+    activeLash = e.target;
+    offsetX = e.offsetX;
+    offsetY = e.offsetY;
+    activeLash.classList.add("dragging");
+    document.addEventListener("mousemove", drag);
+    document.addEventListener("mouseup", drop);
+  }
+
+  function drag(e) {
+    if (!activeLash) return;
+    activeLash.style.left = (e.pageX - offsetX) + "px";
+    activeLash.style.top = (e.pageY - offsetY) + "px";
+    activeLash.style.position = "absolute";
+  }
+
+  function drop(e) {
+    if (!activeLash) return;
+
+    eyes.forEach(eye => {
+      const rect = eye.getBoundingClientRect();
+      const eyeCenterX = rect.left + rect.width / 2;
+      const eyeCenterY = rect.top + rect.height / 2;
+
+      const dist = Math.hypot(e.pageX - eyeCenterX, e.pageY - eyeCenterY);
+
+      if (dist < 80) {
+        activeLash.style.left = (eyeCenterX - 40) + "px";
+        activeLash.style.top = (rect.top - 20) + "px";
+      }
+    });
+
+    activeLash.classList.remove("dragging");
+    document.removeEventListener("mousemove", drag);
+    document.removeEventListener("mouseup", drop);
+    activeLash = null;
+  }
+</script>
+
+</body>
+</html>

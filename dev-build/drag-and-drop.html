@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Touch & Drag Eyelashes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom right, #6dd5ed, #2193b0);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    .eyes {
+      display: flex;
+      gap: 50px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 20px;
+    }
+
+    .eye-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .eye {
+      width: 140px;
+      height: 140px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 0 0 4px #000;
+    }
+
+    .pupil {
+      width: 40px;
+      height: 40px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .eyelash {
+      width: 60px;
+      height: 6px;
+      background: black;
+      border-radius: 8px;
+      position: absolute;
+      cursor: grab;
+      touch-action: none;
+      transition: transform 0.2s ease;
+    }
+
+    .eyelash.dragging {
+      cursor: grabbing;
+      opacity: 0.7;
+      z-index: 999;
+    }
+
+    .eyelash-tray {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+    }
+
+    .eyelash-tray .eyelash {
+      position: static;
+      transform: rotate(25deg);
+    }
+
+    .eyelash-tray .eyelash:nth-child(2) {
+      transform: rotate(-25deg);
+    }
+
+    @media (max-width: 500px) {
+      .eye {
+        width: 100px;
+        height: 100px;
+      }
+
+      .pupil {
+        width: 30px;
+        height: 30px;
+      }
+
+      .eyelash {
+        width: 50px;
+        height: 5px;
+      }
+
+      .eyelash-tray {
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="eyes">
+  <div class="eye-container">
+    <div class="eye"></div>
+  </div>
+  <div class="eye-container">
+    <div class="eye"></div>
+  </div>
+</div>
+
+<div class="eyelash-tray">
+  <div class="eyelash"></div>
+  <div class="eyelash"></div>
+</div>
+
+<script>
+  const eyelashes = document.querySelectorAll(".eyelash");
+  const eyes = document.querySelectorAll(".eye");
+  let activeLash = null;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  eyelashes.forEach(lash => {
+    lash.addEventListener("mousedown", startDrag);
+    lash.addEventListener("touchstart", startDrag, { passive: false });
+  });
+
+  function startDrag(e) {
+    e.preventDefault();
+    activeLash = e.target;
+    activeLash.classList.add("dragging");
+
+    const isTouch = e.type === "touchstart";
+    const clientX = isTouch ? e.touches[0].clientX : e.clientX;
+    const clientY = isTouch ? e.touches[0].clientY : e.clientY;
+
+    const rect = activeLash.getBoundingClientRect();
+    offsetX = clientX - rect.left;
+    offsetY = clientY - rect.top;
+
+    document.addEventListener(isTouch ? "touchmove" : "mousemove", drag);
+    document.addEventListener(isTouch ? "touchend" : "mouseup", drop);
+  }
+
+  function drag(e) {
+    const isTouch = e.type === "touchmove";
+    const clientX = isTouch ? e.touches[0].clientX : e.clientX;
+    const clientY = isTouch ? e.touches[0].clientY : e.clientY;
+
+    if (!activeLash) return;
+    activeLash.style.position = "absolute";
+    activeLash.style.left = (clientX - offsetX) + "px";
+    activeLash.style.top = (clientY - offsetY) + "px";
+  }
+
+  function drop(e) {
+    if (!activeLash) return;
+
+    const isTouch = e.type === "touchend";
+    const clientX = isTouch ? (e.changedTouches[0]?.clientX || 0) : e.clientX;
+    const clientY = isTouch ? (e.changedTouches[0]?.clientY || 0) : e.clientY;
+
+    eyes.forEach(eye => {
+      const rect = eye.getBoundingClientRect();
+      const eyeCenterX = rect.left + rect.width / 2;
+      const eyeTopY = rect.top;
+
+      const dist = Math.hypot(clientX - eyeCenterX, clientY - eyeTopY);
+      if (dist < 80) {
+        activeLash.style.left = (eyeCenterX - 30) + "px";
+        activeLash.style.top = (eyeTopY - 10) + "px";
+      }
+    });
+
+    activeLash.classList.remove("dragging");
+    document.removeEventListener(isTouch ? "touchmove" : "mousemove", drag);
+    document.removeEventListener(isTouch ? "touchend" : "mouseup", drop);
+    activeLash = null;
+  }
+</script>
+
+</body>
+</html>
