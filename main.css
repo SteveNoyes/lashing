@@ -14,8 +14,8 @@ body {
 }
 
 #draggable-object {
-  width: 100px;
-  height: 100px;
+  width: 400px;
+  height: 400px;
   background-color: steelblue;
   border-radius: 12px;
   position: absolute;
