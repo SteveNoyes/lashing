@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   padding: 0;
   touch-action: none;
@@ -22,4 +22,326 @@ body {
   top: 100px;
   left: 100px;
   touch-action: none;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(#FFF -100%, #419197);
+}
+
+.smiley {
+  position: relative;
+  width: 12rem;
+  height: 12rem;
+  background-color: #F5FCCD;
+  border-radius: 45% 45% 50% 50%;
+  overflow: hidden;
+}
+.smiley__wrapper {
+  position: relative;
+  top: -1rem;
+  padding: 2rem 1rem 1rem;
+}
+.smiley__wrapper--left .smiley__face {
+  left: 10%;
+}
+.smiley__wrapper--left .smiley__nose {
+  box-shadow: -4px 4px 0 0 #12486B;
+}
+.smiley__wrapper--left .smiley__hair-background {
+  left: 5%;
+  border-top-right-radius: 50%;
+  border-bottom-left-radius: 40%;
+}
+.smiley__wrapper--left .smiley__hair {
+  left: -52%;
+}
+.smiley__wrapper--left .smiley__neck {
+  background-position: 80% 0;
+}
+.smiley__wrapper--left .smiley__shirt {
+  border-radius: 5rem 4rem 0 0;
+}
+.smiley__wrapper--right .smiley__face {
+  left: 40%;
+}
+.smiley__wrapper--right .smiley__nose {
+  box-shadow: 4px 4px 0 0 #12486B;
+}
+.smiley__wrapper--right .smiley__hair-background {
+  left: -2%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 40%;
+}
+.smiley__wrapper--right .smiley__hair {
+  left: 0;
+}
+.smiley__wrapper--right .smiley__neck {
+  background-position: 20% 0;
+}
+.smiley__wrapper--right .smiley__shirt {
+  border-radius: 4rem 5rem 0 0;
+}
+.smiley__wrapper--top .smiley__face {
+  top: 10%;
+}
+.smiley__wrapper--top .smiley__hair-background {
+  top: 5%;
+}
+.smiley__wrapper--top .smiley__hair {
+  top: -38%;
+}
+.smiley__wrapper--top .smiley__hair-part:before {
+  bottom: -60%;
+}
+.smiley__wrapper--top .smiley__neck {
+  bottom: -10%;
+}
+.smiley__wrapper--top .smiley__shirt {
+  height: 5.2rem;
+}
+.smiley__wrapper--bottom .smiley__face {
+  top: 40%;
+}
+.smiley__wrapper--bottom .smiley__hair-background {
+  top: -2%;
+}
+.smiley__wrapper--bottom .smiley__hair {
+  top: 1%;
+}
+.smiley__hair-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #12486B;
+  width: 100%;
+  height: 90%;
+  border-radius: 45% 45% 35% 35%;
+  transition-property: top, left, border-radius;
+  transition-duration: 1s;
+}
+.smiley__hair-background--wrapper {
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  overflow: hidden;
+}
+.smiley__face {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  height: 50%;
+  transition-property: top, left;
+  transition-duration: 1s;
+}
+.smiley__face:before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  display: flex;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, transparent 20%, #ff7d66 100%);
+}
+.smiley__hair {
+  position: absolute;
+  top: -17%;
+  left: -25%;
+  display: flex;
+  width: 150%;
+  height: 60%;
+  transition-property: top, left;
+  transition-duration: 1s;
+}
+.smiley__hair-part {
+  position: relative;
+  height: 100%;
+  background-color: #12486B;
+  box-shadow: 0 4px 8px 4px rgba(18, 72, 107, 0.2);
+}
+.smiley__hair-part:before {
+  content: "";
+  position: absolute;
+  bottom: -55%;
+  width: 2.5rem;
+  height: 100%;
+  background-color: #12486B;
+  transition: bottom 1s;
+}
+.smiley__hair-part--left {
+  width: 45%;
+  border-radius: 0 0 30% 0;
+}
+.smiley__hair-part--left:before {
+  left: 0;
+  transform: rotate(30deg);
+}
+.smiley__hair-part--right {
+  width: 55%;
+  border-radius: 0 0 0 10%;
+}
+.smiley__hair-part--right:before {
+  right: 0;
+  transform: rotate(-30deg);
+}
+.smiley__eyes {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  height: 40%;
+}
+.smiley__eye {
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+  background: linear-gradient(#419197, #12486B);
+  border-radius: 50%;
+  animation: blink;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+}
+@keyframes blink {
+  0%, 49%, 51%, 100% {
+    height: 1rem;
+  }
+  50% {
+    height: 0;
+  }
+}
+.smiley__eye:after {
+  content: "";
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: 0.2rem;
+  height: 0.2rem;
+  background-color: #FFF;
+  border-radius: 50%;
+}
+.smiley__ears {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 235%;
+  height: 30%;
+}
+.smiley__ear {
+  width: 0.5rem;
+  height: 100%;
+  border-top: 2px solid #12486B;
+  border-bottom: 2px solid #12486B;
+}
+.smiley__ear--left {
+  border-radius: 200px 0 0 200px;
+  border-left: 4px solid #12486B;
+}
+.smiley__ear--right {
+  border-radius: 0 200px 200px 0;
+  border-right: 4px solid #12486B;
+}
+.smiley__nose {
+  position: absolute;
+  top: 40%;
+  width: 1rem;
+  height: 1rem;
+  background-color: #F5FCCD;
+  border-radius: 0.4rem;
+  box-shadow: 0 4px 0 0 #12486B;
+  transition: box-shadow 1s ease;
+}
+.smiley__blushes {
+  position: relative;
+  top: -10%;
+  display: flex;
+  justify-content: space-between;
+  width: 160%;
+  height: 20%;
+}
+.smiley__blush {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: rgba(255, 125, 102, 0.6);
+  filter: blur(4px);
+}
+.smiley__mouth {
+  position: relative;
+  width: 40%;
+  height: 5%;
+  border-left: 2px solid #12486B;
+  border-bottom: 5px solid #12486B;
+  border-right: 2px solid #12486B;
+  border-radius: 0 0 200px 200px;
+  border-top: none;
+}
+.smiley__neck {
+  position: absolute;
+  left: calc(50% - 2rem);
+  bottom: -2rem;
+  width: 4rem;
+  height: 5rem;
+  background: linear-gradient(90deg, #ff7d66 0, #F5FCCD 50%, #ff7d66 100%);
+  background-size: 300% 100%;
+  background-position: 50% 0;
+  border-radius: 0 0 2rem 2rem;
+  transition-property: bottom, background-position;
+  transition-duration: 1s;
+  box-shadow: inset 0 30px 8px 4px rgba(18, 72, 107, 0.2);
+}
+.smiley__shirt {
+  position: absolute;
+  left: 0;
+  bottom: -5rem;
+  width: 100%;
+  height: 5.6rem;
+  background: linear-gradient(#ff7d66, #FFF);
+  border-radius: 5rem 5rem 0 0;
+  transition-property: border-radius, height;
+  transition-duration: 1s;
 }
