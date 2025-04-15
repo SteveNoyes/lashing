@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  padding: 0;
+  touch-action: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+#play-area {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0f0f0;
+  position: relative;
+}
+
+#draggable-object {
+  width: 100px;
+  height: 100px;
+  background-color: steelblue;
+  border-radius: 12px;
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  touch-action: none;
+}
