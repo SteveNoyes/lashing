@@ -35,17 +35,6 @@
 // });
 
 
-
-
-
-
-
-
-
-
-
-
-
 // const className = 'smiley__wrapper';
 // const smiley = document.getElementById(className);
 
@@ -77,24 +66,6 @@
 // In a PROD case we should use a "throttle function" for these events
 // window.addEventListener('mousemove', mouseFunction);
 // window.addEventListener('touchstart', mouseFunction);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //Define vars
